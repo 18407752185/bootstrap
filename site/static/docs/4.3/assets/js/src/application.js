@@ -61,8 +61,8 @@
   // Disable empty links in docs examples
   makeArray(document.querySelectorAll('.bd-content [href="#"]'))
     .forEach(function (link) {
-      link.addEventListener('click', function (e) {
-        e.preventDefault()
+      link.addEventListener('click', function (event) {
+        event.preventDefault()
       })
     })
 
@@ -95,21 +95,21 @@
     })
 
   // Insert copy to clipboard button before .highlight
-  var btnHtml = '<div class="bd-clipboard"><button type="button" class="btn-clipboard" title="Copy to clipboard">Copy</button></div>'
+  var buttonHtml = '<div class="bd-clipboard"><button type="button" class="btn-clipboard" title="Copy to clipboard">Copy</button></div>'
   makeArray(document.querySelectorAll('figure.highlight, div.highlight'))
     .forEach(function (element) {
-      element.insertAdjacentHTML('beforebegin', btnHtml)
+      element.insertAdjacentHTML('beforebegin', buttonHtml)
     })
 
   makeArray(document.querySelectorAll('.btn-clipboard'))
-    .forEach(function (btn) {
-      var tooltipBtn = new bootstrap.Tooltip(btn)
+    .forEach(function (button) {
+      var tooltipButton = new bootstrap.Tooltip(button)
 
-      btn.addEventListener('mouseleave', function () {
+      button.addEventListener('mouseleave', function () {
         // Explicitly hide tooltip, since after clicking it remains
         // focused (as it's a button), so tooltip would otherwise
         // remain visible until focus is moved away
-        tooltipBtn.hide()
+        tooltipButton.hide()
       })
     })
 
@@ -119,29 +119,29 @@
     }
   })
 
-  clipboard.on('success', function (e) {
-    var tooltipBtn = bootstrap.Tooltip._getInstance(e.trigger)
+  clipboard.on('success', function (event) {
+    var tooltipButton = bootstrap.Tooltip._getInstance(event.trigger)
 
-    e.trigger.setAttribute('title', 'Copied!')
-    tooltipBtn._fixTitle()
-    tooltipBtn.show()
+    event.trigger.setAttribute('title', 'Copied!')
+    tooltipButton._fixTitle()
+    tooltipButton.show()
 
-    e.trigger.setAttribute('title', 'Copy to clipboard')
-    tooltipBtn._fixTitle()
-    e.clearSelection()
+    event.trigger.setAttribute('title', 'Copy to clipboard')
+    tooltipButton._fixTitle()
+    event.clearSelection()
   })
 
-  clipboard.on('error', function (e) {
+  clipboard.on('error', function (event) {
     var modifierKey = /Mac/i.test(navigator.userAgent) ? '\u2318' : 'Ctrl-'
-    var fallbackMsg = 'Press ' + modifierKey + 'C to copy'
-    var tooltipBtn = bootstrap.Tooltip._getInstance(e.trigger)
+    var fallbackMessage = 'Press ' + modifierKey + 'C to copy'
+    var tooltipButton = bootstrap.Tooltip._getInstance(event.trigger)
 
-    e.trigger.setAttribute('title', fallbackMsg)
-    tooltipBtn._fixTitle()
-    tooltipBtn.show()
+    event.trigger.setAttribute('title', fallbackMessage)
+    tooltipButton._fixTitle()
+    tooltipButton.show()
 
-    e.trigger.setAttribute('title', 'Copy to clipboard')
-    tooltipBtn._fixTitle()
+    event.trigger.setAttribute('title', 'Copy to clipboard')
+    tooltipButton._fixTitle()
   })
 
   anchors.options = {
@@ -151,8 +151,8 @@
 
   // Wrap inner
   makeArray(document.querySelectorAll('.bd-content > h2, .bd-content > h3, .bd-content > h4, .bd-content > h5'))
-    .forEach(function (hEl) {
-      hEl.innerHTML = '<span class="bd-content-title">' + hEl.innerHTML + '</span>'
+    .forEach(function (element) {
+      element.innerHTML = '<span class="bd-content-title">' + element.innerHTML + '</span>'
     })
 
   bsCustomFileInput.init()
